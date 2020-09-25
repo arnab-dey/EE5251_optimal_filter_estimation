@@ -1,0 +1,99 @@
+%----------------------------------------------------------------------------------------
+%	SOLUTION 3.4
+%----------------------------------------------------------------------------------------
+\subsection*{Solution 3.4}
+\paragraph{$X \sim geometric_0(p)$:} In this case, $P(X=k) = (1-p)p^k$. Therefore,
+\begin{align*}
+	G_X(z) &= \mathbb{E}[z^X]\\
+	&= \sum_{k=0}^{\infty} z^k P(X=k)\\
+	&= (1-p)\sum_{k=0}^{\infty}(zp)^k\\
+	&= \frac{1-p}{1-zp}.
+\end{align*}
+Now,
+\begin{align*}
+	\mathbb{E}[X] &= G_X^{\prime}(z)|_{z=1}\\
+	&= \frac{(1-p)p}{(1-zp)^2}\Big|_{z=1}\\
+	&= \frac{p}{1-p}.
+\end{align*}
+Also,
+\begin{align*}
+	\mathbb{E}[X^2]-\mathbb{E}[X] &= G_X^{\prime\prime}(z)|_{z=1}\\
+	&= \frac{2p^2(1-p)}{(1-zp)^3}\Big|_{z=1}\\
+	&= \frac{2p^2}{(1-p)^2}.
+\end{align*}
+Therefore,
+\begin{align*}
+	\mathbb{E}[X^2] &= \frac{2p^2}{(1-p)^2} + \mathbb{E}[X]\\
+	&= \frac{2p^2}{(1-p)^2} + \frac{p}{1-p}\\
+	&= \frac{p^2+p}{(1-p)^2}.
+\end{align*}
+Therefore,
+\begin{align*}
+	\text{Var}(X) &= \mathbb{E}[X^2] - (\mathbb{E}[X])^2\\
+	&= \frac{p^2+p}{(1-p)^2} - \frac{p^2}{(1-p)^2}\\
+	&= \frac{p}{(1-p)^2}.
+\end{align*}
+\paragraph{$X \sim geometric_1(p)$:} In this case, $P(X=k) = (1-p)p^{k-1}$. Therefore,
+\begin{align*}
+	G_X(z) &= \mathbb{E}[z^X]\\
+	&= \sum_{k=1}^{\infty} z^k P(X=k)\\
+	&= \frac{(1-p)}{p}\sum_{k=1}^{\infty}(zp)^k\\
+	&= \frac{z(1-p)}{1-zp}.
+\end{align*}
+Now,
+\begin{align*}
+	\mathbb{E}[X] &= G_X^{\prime}(z)|_{z=1}\\
+	&= \left[\frac{1-p}{1-zp} + \frac{zp(1-p)}{(1-zp)^2}\right]\Big|_{z=1}\\
+	&= \frac{1-p}{(1-zp)^2}\Big|_{z=1}\\
+	&= \frac{1}{1-p}.
+\end{align*}
+Also,
+\begin{align*}
+	\mathbb{E}[X^2]-\mathbb{E}[X] &= G_X^{\prime\prime}(z)|_{z=1}\\
+	&= \frac{2p(1-p)}{(1-zp)^3}\Big|_{z=1}\\
+	&= \frac{2p}{(1-p)^2}.
+\end{align*}
+Therefore,
+\begin{align*}
+	\mathbb{E}[X^2] &= \frac{2p}{(1-p)^2} + \mathbb{E}[X]\\
+	&= \frac{2p}{(1-p)^2} + \frac{1}{1-p}\\
+	&= \frac{1+p}{(1-p)^2}.
+\end{align*}
+Therefore,
+\begin{align*}
+	\text{Var}(X) &= \mathbb{E}[X^2] - (\mathbb{E}[X])^2\\
+	&= \frac{1+p}{(1-p)^2} - \frac{1}{(1-p)^2}\\
+	&= \frac{p}{(1-p)^2}.
+\end{align*}
+%----------------------------------------------------------------------------------------
+%	SOLUTION 3.14
+%----------------------------------------------------------------------------------------
+\subsection*{Solution 3.14}
+Flipping of bits in the codeword is $i.i.d$ Bernoulli events. Let, $X_i$ denote the $i.i.d$ random variables where $X_i = 1$ if the $i^{th}$ bit is flipped and $X_i \sim Bernoulli(p), i=1,2,\ldots,10$. Let, $Y \coloneqq X_1+\ldots+X_{10}$ denote the number of bits flipped. Note that,
+\begin{align*}
+	P(Y=k) = {10 \choose k}p^k(1-p)^{10-k}.
+\end{align*} 
+Therefore, the probability that the codeword cannot be correctly detected is given by,
+\begin{align*}
+	P(Y > 2) &= 1- P(Y \leq 2)\\
+	&= 1-[P(Y=0) + P(Y=1) + P(Y=2)]\\
+	&= 1-\left[(1-p)^{10} + {10 \choose 1}p(1-p)^{9} + {10 \choose 2}p^2(1-p)^{8}\right]\\
+	&= 1-(1-p)^8\left[(1-p)^2 + 10p(1-p) + 45p^2\right].
+\end{align*}
+%----------------------------------------------------------------------------------------
+%	SOLUTION 3.27
+%----------------------------------------------------------------------------------------
+\subsection*{Solution 3.27}
+Let the random variable $X$ denote the trasmitter value and $Y$ denote the receiver value. It is given that,
+\begin{align*}
+	P(Y=k|X=1) &= \frac{\mu^k e^{-\mu}}{k!}\\
+	P(Y=k|X=2) &= \frac{\nu^k e^{-\nu}}{k!}\\
+	P(X=1) &= P(X=2) = \frac{1}{2}.
+\end{align*}
+We need to find, $P(X=1 | Y=2)$. Now,
+\begin{align*}
+	P(X=1 | Y=2) &= \frac{P(Y=2|X=1)P(X=1)}{\sum_{i=1}^2 P(Y=2|X=i)P(X=i)}\\
+	&= \frac{\frac{\mu^2 e^{-\mu}}{2}\frac{1}{2}}{\frac{\mu^2 e^{-\mu}}{4} + \frac{\nu^2 e^{-\nu}}{4}}\\
+	&= \frac{\mu^2 e^{-\mu}}{\mu^2 e^{-\mu} + \nu^2 e^{-\nu}}\\
+	&= \frac{1}{1+(\frac{\nu}{\mu})^2e^{\mu-\nu}}.
+\end{align*}
