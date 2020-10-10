@@ -1,0 +1,63 @@
+%----------------------------------------------------------------------------------------
+%	SOLUTION 1
+%----------------------------------------------------------------------------------------
+\subsection*{Problem 1}
+\paragraph{Problem 2.5} The probability density function of an exponential random variable, $X$, is
+\begin{align*}
+	f_X(x) = \begin{cases}
+		a e^{-ax}, &\ x \geq 0\\
+		0 &\ x < 0, 
+	\end{cases}
+\end{align*}
+where $a \geq 0$.
+\paragraph{(a)} Probability distribution function of the exponentially distributed random variable, $X$, is:
+\begin{align*}
+	F_X(x) = \int_{-\infty}^{x} f_X(z)dz
+\end{align*}
+\paragraph{case 1: $x < 0$}:
+\begin{align*}
+	F_X(x) = \int_{-\infty}^{x} 0 dz = 0.
+\end{align*}
+\paragraph{case 2: $x \geq 0$}:
+\begin{align*}
+	F_X(x) &= \int_{-\infty}^{x} f_X(z)dz\\
+	&= \int_{-\infty}^{0}0 dz + \int_{0}^{x} ae^{-az}dz\\
+	&= - e^{-az} \Big|_{0}^{x}\\
+	&= 1-e^{-ax}.
+\end{align*}
+Therefore,
+\begin{align*}
+	F_X(x) = \begin{cases}
+		1-e^{-ax}, &\ x \geq 0\\
+		0 &\ x <0.
+	\end{cases}
+\end{align*}
+\paragraph{(b)} The mean of $X$ is given by (assuming $a > 0$),
+\begin{align}\label{eq:exp_expectation}
+	\mathbb{E}[X] &= \int_{-\infty}^{\infty} z f_X(z)dz \nonumber\\
+	&= a\int_{0}^{\infty} z e^{-az}dz \nonumber\\
+	&= a\left[\left[-\frac{z}{a}e^{-az}\right]_0^{\infty}+\frac{1}{a}\int_{0}^{\infty}e^{-az}dz\right] \nonumber\\
+	&= -\frac{1}{a}\left[e^{-az}\right]_0^{\infty} \nonumber\\
+	&= \frac{1}{a}.
+\end{align}
+\paragraph{(c)} The second moment of $X$ is,
+\begin{align}\label{eq:exp_sec_moment}
+	\mathbb{E}[X^2] &= \int_{-\infty}^{\infty}z^2f_X(z)dz \nonumber\\
+	&= a\int_{0}^{\infty}z^2e^{-az}dz \nonumber\\
+	&= a \left[\left[-\frac{z^2}{a}e^{-az}\right]_0^{\infty}+\frac{2}{a}\int_{0}^{\infty}ze^{-az}dz\right] \nonumber\\
+	&= a\left[\frac{2}{a}\frac{1}{a^2}\right] \hspace*{1cm}[\text{ from }(\ref{eq:exp_expectation})] \nonumber\\
+	&= \frac{2}{a^2}.
+\end{align}
+\paragraph{(d)}The variance of $X$ is,
+\begin{align}\label{eq:exp_var}
+	\mathbb{E}[(X-\mathbb{E}[X])^2] &= \mathbb{E}[X^2]-(\mathbb{E}[X])^2 \nonumber\\
+	&= \frac{2}{a^2} - \frac{1}{a^2}\hspace*{1cm}[\text{ from }(\ref{eq:exp_expectation}) \text{ and }(\ref{eq:exp_sec_moment})]\\
+	&= \frac{1}{a^2}.
+\end{align}
+\paragraph{(e)} The probability that $X$ takes on a value within one standard deviation of its mean is given by,
+\begin{align*}
+	P(\frac{1}{a}-\frac{1}{a} \leq X \leq \frac{1}{a}+\frac{1}{a}) &= P(0 \leq X \leq \frac{2}{a})\\
+	&= F_X\left(\frac{2}{a}\right)-F_X(0)\\
+	&= 1-e^{-2}\\
+	&= 0.865.
+\end{align*}

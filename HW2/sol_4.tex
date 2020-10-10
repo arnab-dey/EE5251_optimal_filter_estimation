@@ -1,0 +1,63 @@
+%----------------------------------------------------------------------------------------
+%	SOLUTION 4
+%----------------------------------------------------------------------------------------
+\subsection*{Problem 4}
+I propose to optimally combine the present radar system with a
+new radar system that has a measurement variance of $6$. The reason is explained in the next paragraphs.
+
+
+To address this problem, either we can use iterative least square or batch weighted least square and both leads to the same solution. I am using batch weighted least square where I assume that all the data from each sensor are available and processed simultaneously. Let the measurements $y \in \mathbb{R}^m$ coming from different sensors and true position $x \in \mathbb{R}^n$ are related as follows:
+\begin{align*}
+	y = Hx + e,
+\end{align*}
+where, $H \in \mathbb{R}^{m \times n}$ is the measurement matrix and $e \in \mathbb{R}^m$ is error matrix associated with $m$ measurements. Let the error covariance matrix is,
+\begin{align*}
+	R = \mathbb{E}[ee^T] = \begin{bmatrix}\sigma_1^2 & 0 & \ldots & 0\\ 0 & \sigma_2^2 & \ldots & 0\\ \vdots & \vdots & \vdots & \vdots\\0 & \ldots & 0 & \sigma_m^2 \end{bmatrix}.
+\end{align*}
+We know that weighted least square estimate of $x$ is:
+\begin{align*}
+	\hat{x} = (H^TR^{-1}H)^{-1}H^TR^{-1}y.
+\end{align*}
+The error associated with estimation of true position is
+\begin{align*}
+	\epsilon_x &= (x-\hat{x})\\
+	&= x-(H^TR^{-1}H)^{-1}H^TR^{-1}y\\
+	&= x-(H^TR^{-1}H)^{-1}H^TR^{-1}(Hx+e)\\
+	&= x-x-(H^TR^{-1}H)^{-1}H^TR^{-1}e\\
+	&= -(H^TR^{-1}H)^{-1}H^TR^{-1}e.
+\end{align*}
+Therefore, we can find the variance of estimation error as follows:
+\begin{align}\label{eq:q4_exp_error}
+	\mathbb{E}[\epsilon_x \epsilon_x^T] &= (H^TR^{-1}H)^{-1}H^TR^{-1}\mathbb{E}[ee^T]R^{-1}H(H^TR^{-1}H)^{-1}\\
+	&= (H^TR^{-1}H)^{-1}H^TR^{-1}H(H^TR^{-1}H)^{-1}\\
+	&= (H^TR^{-1}H)^{-1}.
+\end{align}
+\paragraph{Case 1:} When we have only one sensor with measure variance of $\sigma_1^2 = 10$, we have the following model
+\begin{align*}
+	y = \underbrace{[1]}_Hx + e
+\end{align*}
+and $R = [10]$. From~(\ref{eq:q4_exp_error}),
+\begin{align*}
+	\mathbb{E}[\epsilon_x \epsilon_x^T] = 10.
+\end{align*}
+\paragraph{Case 2:} When we combine a sensor having measurement variance of $\sigma_2^2 = 6$, with the current sensor with $\sigma_1^2 = 10$, we have the following model
+\begin{align*}
+y = \underbrace{\begin{bmatrix}1\\1\end{bmatrix}}_Hx + e
+\end{align*}
+and $R = \begin{bmatrix}10 & 0\\0 & 6\end{bmatrix}$. From~(\ref{eq:q4_exp_error}),
+\begin{align*}
+\mathbb{E}[\epsilon_x \epsilon_x^T] &= \left(\begin{bmatrix}1 & 1\end{bmatrix}\begin{bmatrix}\frac{1}{10} & 0\\0 & \frac{1}{6}\end{bmatrix}\begin{bmatrix}1\\1\end{bmatrix}\right)^{-1}\\
+&= \left(\frac{1}{10} + \frac{1}{6}\right)^{-1}\\
+&= 3.75.
+\end{align*}
+\paragraph{Case 3:} When we combine two sensors having same measurement variance of $10$, as the original system, along with the original one, we have the following model
+\begin{align*}
+y = \underbrace{\begin{bmatrix}1\\1\\1\end{bmatrix}}_Hx + e
+\end{align*}
+and $R = \begin{bmatrix}10 & 0 & 0\\0 & 10 & 0\\0 & 0 & 10\end{bmatrix} = 10 I_3$. From~(\ref{eq:q4_exp_error}),
+\begin{align*}
+	\mathbb{E}[\epsilon_x \epsilon_x^T] &= \left(\begin{bmatrix}1 & 1 & 1\end{bmatrix}\frac{1}{10}I_3\begin{bmatrix}1\\1\\1\end{bmatrix}\right)^{-1}\\
+	&= \frac{10}{3}\\
+	&= 3.33.
+\end{align*}
+Therefore, we can see that case 2 gives the least variance in error of position estimation. Hence, a good choice of sensors would be the combination of current sensor having measurement variance $10$ with another with measurement variance of $6$. 

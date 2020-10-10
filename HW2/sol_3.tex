@@ -1,0 +1,48 @@
+%----------------------------------------------------------------------------------------
+%	SOLUTION 3
+%----------------------------------------------------------------------------------------
+\subsection*{Problem 3}
+Total number of residents, $|M \cap I| + |M \cap C| + |F \cap I| + |F \cap C| = 340454+40854+359881+172742 = 913931$. Total number of male residents, $|M| = |M \cap I| + |M \cap C| = 340454+40854 = 381308$.
+\newline
+Total number of female residents, $|F| = |F \cap I| + |F \cap C| = 359881+172742 = 532623$.
+\newline
+Therefore,
+\begin{align*}
+	P(M) &= \frac{381308}{913931} = 0.417\\
+	P(F) &= \frac{532623}{913931} = 0.583\\
+	P(C) &= \frac{|M \cap C|+|F \cap C|}{913931} = \frac{40854+172742}{913931} = 0.234\\
+	P(I) &= \frac{|M \cap I|+|F \cap I|}{913931} = \frac{340454+359881}{913931} = 0.766\\
+	P(M \cap I) &= \frac{|M \cap I|}{913931} = \frac{340454}{913931} = 0.373\\
+	P(F \cap I) &= \frac{|F \cap I|}{913931} = \frac{359881}{913931} = 0.394\\
+	P(M \cap C) &= \frac{|M \cap C|}{913931} = \frac{40854}{913931} = 0.045\\
+	P(F \cap C) &= \frac{|F \cap C|}{913931} = \frac{172742}{913931} = 0.19.
+\end{align*}
+\paragraph{(a)} Now, $P(M|C) = \frac{P(M \cap C)}{P(C)} = \frac{0.045}{0.234} = 0.192$. Therefore, the probability that a male resident of the island picked at random will be a convicted felon is,
+\begin{align*}
+	P(C|M) &= \frac{P(M|C)P(C)}{P(M)}\\
+	&= \frac{0.192 \times 0.234}{0.417}\\
+	&= 0.108.
+\end{align*}
+Note that we can obtain the same result from the given relative frequencies as $P(C|M) = \frac{40854}{40854+340454} = 0.107$.
+\paragraph{(b)}$P(F|C) = \frac{P(F \cap C)}{P(C)} = \frac{0.19}{0.234} = 0.812$. Therefore, the probability that a female resident of the island picked at random will be
+a convicted felon is
+\begin{align*}
+	P(C|F) &= \frac{P(F|C)P(C)}{P(F)}\\
+	&= \frac{0.812 \times 0.234}{0.583}\\
+	&= 0.326.
+\end{align*}
+Note that we can obtain the same result from the given relative frequencies as $P(C|F) = \frac{172742}{172742+359881} = 0.324$.
+\paragraph{(c)}
+\begin{align*}
+	P(F|C) &= \frac{P(C|F)P(F)}{P(C)}\\
+	&= \frac{0.326 \times 0.583}{0.234}\\
+	&= 0.81.
+\end{align*}
+Note that we can obtain the same result from the given relative frequencies as $P(F|C) = \frac{172742}{172742+40854} = 0.81$.
+\paragraph{(d)}
+\begin{align*}
+	P(M|C) &= \frac{P(C|M)P(M)}{P(C)}\\
+	&= \frac{0.108 \times 0.417}{0.234}\\
+	&= 0.19.
+\end{align*}
+Note that we can obtain the same result from the given relative frequencies as $P(M|C) = \frac{40854}{40854+172742} = 0.19$.
