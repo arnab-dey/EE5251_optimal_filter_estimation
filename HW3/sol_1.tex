@@ -1,0 +1,73 @@
+%----------------------------------------------------------------------------------------
+%	SOLUTION 1
+%----------------------------------------------------------------------------------------
+\subsection*{Problem 1}
+\paragraph{Problem 4.4.a}The simplified motor model can be written as
+\begin{align*}
+	\dot{\theta} &= \omega\\
+	\dot{\omega} &= u+w_1,
+\end{align*}
+where $\theta$ is the angular position, $\omega$ is the angular velocity of the shaft, $u$ is the control input and $w_1$ is the acceleration noise. The state-space model can be written in the matrix form as follows:
+\begin{align}\label{eq:q1_ss_model}
+	\underbrace{\begin{bmatrix}\dot{\theta}\\\dot{\omega}\end{bmatrix}}_{\dot{x}} &= \underbrace{\begin{bmatrix}0 & 1\\0 & 0\end{bmatrix}}_{A}\underbrace{\begin{bmatrix}\theta\\\omega\end{bmatrix}}_{x}+\underbrace{\begin{bmatrix}0\\1\end{bmatrix}}_{B}u+\underbrace{\begin{bmatrix}0\\w_1\end{bmatrix}}_{w}\nonumber\\
+	y &= \underbrace{\begin{bmatrix}1 & 0\end{bmatrix}}_{C}x+v,
+\end{align}
+where the scalar $v$ is the measurement noise. We know that the solution for the states, considering $\Delta t = t_{k+1}-t_k$, and $u(t_k)=u_k$ constant in $[t_k, t_{k+1}]$, in the discretized model is:
+\begin{align*}
+	x_{k+1} &= \underbrace{e^{A\Delta t}}_{F_{k}}x_{k} + \underbrace{\int_{t_{k}}^{t_{k+1}} e^{A(t_{k+1}-\tau)}B\text{d}\tau}_{G_k}u_k+\underbrace{\int_{t_k}^{t_{k+1}}e^{A(t_{k+1}-\tau)}w(\tau)\text{d}\tau}_{W_k}.
+\end{align*}
+Now, eigen values of $A$ are $0,0$ and corresponding eigen vectors are $[1\ 0]^T, [0\ 1]^T$. Therefore, we can form a matrix $Q$ taking the eigen vectors and compute $e^{A\Delta t}$ as follows:
+\begin{align*}
+	e^{A\Delta t} = Q e^{\hat{A}\Delta t} Q^{-1},
+\end{align*}
+where $Q = \begin{bmatrix}1 & 0\\0 & 1\end{bmatrix}=I$, $\hat{A}$ is the jordan form of $A$, which in this case is same as $A$. Therefore,
+\begin{align*}
+	F_k &= e^{A\Delta t}\\
+	&= Q e^{\hat{A}\Delta t}Q^{-1}\\
+	&= e^{\hat{A}\Delta t}\\
+	&= \begin{bmatrix}1&\Delta t\\0&1\end{bmatrix}.
+\end{align*}
+Also,
+\begin{align*}
+	G_k &= F_k \int_{0}^{\Delta t}e^{-A\Delta \tau}\text{d}\tau B\\
+	&\approx F_k\left[I\Delta t - \frac{(\Delta t)^2}{2}A\right]B\\
+	&= F_k \left(\begin{bmatrix}\Delta t & 0\\0 & \Delta t\end{bmatrix}-\begin{bmatrix}0&\frac{(\Delta t)^2}{2}\\0&0\end{bmatrix}\right)B\\
+	&= \begin{bmatrix}1&\Delta t\\0&1\end{bmatrix}\begin{bmatrix}\Delta t&-\frac{(\Delta t)^2}{2}\\0&\Delta t\end{bmatrix}\begin{bmatrix}0\\1\end{bmatrix}\\
+	&= \begin{bmatrix}\Delta t&\frac{(\Delta t)^2}{2}\\0&\Delta t\end{bmatrix}\begin{bmatrix}0\\1\end{bmatrix}\\
+	&= \begin{bmatrix}\frac{(\Delta t)^2}{2}\\ \Delta t\end{bmatrix}.
+\end{align*}
+Now, from the discretized model $x_{k+1}=F_k x_k+G_k+W_k$, we can see that,
+\begin{align*}
+	x_{k+2} &= F_{k+1}\left(F_k x_k+G_ku_k+W_k\right)+W_{k+1}\\
+	&= (F_k)^2x_k + F_kG_ku_k + F_kW_k + W_{k+1}.
+\end{align*}
+Similarly, we can see that the multiple state transition matrix is given by,
+\begin{align*}
+	F_{k+i} &= (F_k)^i\\
+	&= e^{iA\Delta t}\\
+	&= \begin{bmatrix}1&i\Delta t\\0&1\end{bmatrix}.
+\end{align*}
+\paragraph{4.4.b}We know that,
+\begin{align*}
+	P_k &= F_{k-1}P_{k-1}F_{k-1}^T+Q_{k-1}.
+\end{align*}
+Therefore, for a fixed noise covariance, $Q = \begin{bmatrix}1&0\\0&0\end{bmatrix}$,
+\begin{align*}
+	P_1 &= F_0 P_0 F_0^T+Q\\
+	&= e^{A\Delta t}P_0 e^{A^T\Delta t}+Q.
+\end{align*}
+Similarly,
+\begin{align*}
+	P_2 &= F_1P_1F_1^T+Q\\
+	&= e^{A\Delta t}\left(e^{A\Delta t}P_0 e^{A^T\Delta t}+Q\right)e^{A^T\Delta t}+Q\\
+	&= e^{2A\Delta t}P_0e^{2A^T\Delta t} + e^{A\Delta t}Qe^{A^T\Delta t}+Q\\
+	&= e^{2A\Delta t}P_0e^{2A^T\Delta t} + \begin{bmatrix}1 &\Delta t\\0&1\end{bmatrix}\begin{bmatrix}1&0\\0&0\end{bmatrix}\begin{bmatrix}1&0\\\Delta t&1\end{bmatrix}+Q\\
+	&= e^{2A\Delta t}P_0e^{2A^T\Delta t} + Q + Q\\
+	&= e^{2A\Delta t}P_0e^{2A^T\Delta t} + 2Q.
+\end{align*}
+Similarly, we can proceed further and derive that,
+\begin{align*}
+	P_k &= e^{kA\Delta t}P_0e^{kA^T\Delta t} + kQ\\
+	&= \begin{bmatrix}1&k\Delta t\\0&1\end{bmatrix}\begin{bmatrix}1&0\\0&0\end{bmatrix}\begin{bmatrix}1&0\\k\Delta t&1\end{bmatrix}+\begin{bmatrix}k&0\\0&0\end{bmatrix}\\
+	&= \begin{bmatrix}k+1&0\\0&0\end{bmatrix}.
+\end{align*}

@@ -1,0 +1,67 @@
+%----------------------------------------------------------------------------------------
+%	SOLUTION 3
+%----------------------------------------------------------------------------------------
+\subsection*{Problem 3}
+\paragraph{Problem 5.9.a}The system equations are:
+\begin{align*}
+	x_{k+1} &= x_k\\
+	y_k &= x_k + v_k\\
+	v_k &\sim (0, R).
+\end{align*}
+We are also given that $\mathbb{E}[x_0^2] = 1$ \textit{i.e.} $P_1^- = 1$. From the system equation, we can see that,
+\begin{align*}
+	F &= 1\\
+	G &= 0\\
+	H &= 1\\
+	Q &= 0.
+\end{align*}
+Therefore, the Kalman gain is:
+\begin{align*}
+	K_k &= P_k^-H^T(HP_k^-H^T+R)^{-1}\\
+	&= \frac{P_k^-}{R+P_k^-}.
+\end{align*}
+\begin{align}\label{eq:q3_one_step_sol}
+	P_k^- &= FP_{k-1}^+F^T + Q \nonumber\\
+	&= P_{k-1}^+\nonumber\\
+	&= (I-K_{k-1}H)P_{k-1}^-(I-K_{k-1}H)^T+K_{k-1}RK_{k-1}^T \nonumber\\
+	&= (1-K_{k-1})^2P_{k-1}^- + RK_{k-1}^2 \nonumber\\
+	&= \left(1-\frac{P_{k-1}^-}{R+P_{k-1}^-}\right)^2P_{k-1}^- + R\left(\frac{P_{k-1}^-}{R+P_{k-1}^-}\right)^2 \nonumber\\
+	&= \left(\frac{R}{R+P_{k-1}^-}\right)^2P_{k-1}^- + R\left(\frac{P_{k-1}^-}{R+P_{k-1}^-}\right)^2\nonumber\\
+	&= \frac{RP_{k-1}^-}{R+P_{k-1}^-}.
+\end{align}
+Proceeding further, we can see that,
+\begin{align*}
+	P_k^- &= \frac{RP_{k-1}^-}{R+P_{k-1}^-}\\
+	&= \frac{R\frac{RP_{k-2}^-}{R+P_{k-2}^-}}{R+\frac{RP_{k-2}^-}{R+P_{k-2}^-}}\\
+	&= \frac{R^2P_{k-2}^-}{R^2+2RP_{k-2}^-}\\
+	&= \frac{RP_{k-2}^-}{R+2P_{k-2}^-}.
+\end{align*}
+Proceeding further till $P_1^-$, we get that,
+\begin{align*}
+	P_k^- &= \frac{RP_1^-}{R+(k-1)P_1^-}\\
+	&= \frac{R}{R+k-1}.
+\end{align*}
+Now, the steady state value of $P_k^-$ is:
+\begin{align*}
+	\lim_{k \to \infty} P_k^- &= \lim_{k \to \infty} \frac{R}{R+k-1}\\
+	&= 0.
+\end{align*}
+\paragraph{5.9.b}If the actual system equation is:
+\begin{align*}
+	x_{k+1} &= x_k + w_k,
+\end{align*}
+where $w_k \sim (0,Q)$ then, if we use the filter equation derived in part (a), we would get
+\begin{align*}
+	P_{k}^- &= FP_{k-1}^+F^T+Q\\
+	&= P_{k-1}^+ +Q\\
+	&= \frac{RP_{k-1}^-}{R+P_{k-1}^-} + Q \hspace*{1cm}[\text{from }(\ref{eq:q3_one_step_sol})].
+\end{align*}
+%As asked in this question, if we use the filter equation derived in part (a), then,
+%\begin{align*}
+%	P_k^- &= \frac{R}{R+k-1} + Q.
+%\end{align*}
+Thus we can see that at each step $Q$ would get added which we will not count for if we use the filter equation derived in part (a).
+In this case, the steady state value would be infinite.
+\paragraph{(c)}The solution is consistent with my understanding. If there is no process noise, then the steady state value of $P_k^-$ becomes $0$ which will in turn make $K_k = \frac{P_k^-}{R+P_k^-} = 0$. Therefore, measurements $y_k$ will be completely ignored. This happens because in steady state, $R$ will be infinitely large compared to $Q$, and hence filter will ignore the measurements.
+
+Similarly, the answer in part (b) we can see that as $Q > 0$, $P_k^- = P_{k-1}^+ + Q$ will always be larger than $P_{k-1}^+$. Therefore, when $P_k^-$ converges, it converges to a larger value, which in limiting case goes to infinity.
