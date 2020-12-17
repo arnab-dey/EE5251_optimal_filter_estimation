@@ -1,0 +1,95 @@
+%----------------------------------------------------------------------------------------
+%	SOLUTION 5.a
+%----------------------------------------------------------------------------------------
+\subsection*{Problem 5.a}
+The scalar system is given by
+\begin{align*}
+	x_{k+1} &= x_k + w_k,\ w_k \sim U[-1,1]\\
+	y_k &= x_k + v_k,\ v_k \sim U[-1,1]\\
+	x_0 &\sim U[-1,1].
+\end{align*}
+Therefore, the pdf of $x_1$ given $Y_0$ is 
+\begin{align*}
+	p(x_1|Y_0) &= \int_{-\infty}^{\infty}p(x_1|x_0)p(x_0|Y_0)\text{d}x_0\\
+	&= \int_{-1}^{1}p(x_1|x_0)p(x_0)\text{d}x_0\hspace*{1cm}[\because x_0 \sim U[-1,1]]\\
+	&= \frac{1}{2}\int_{-1}^{1}p(x_1|x_0)\text{d}x_0.
+\end{align*}
+Now,
+\begin{align*}
+	& x_1 = x_0+w_0\\
+	\implies & w_0 = x_1-x_0.
+\end{align*}
+and,
+\begin{align*}
+	p(w_0) = p(x_1-x_0) = p(x_1|x_0) \sim U[-1,1] = \begin{cases}
+		\frac{1}{2},\ \text{ if } -1 \leq x_1-x_0 \leq 1\\
+		0,\ \text{ otherwise }.
+	\end{cases}
+\end{align*}
+Therefore, if, $2 \geq x_1 \geq 0$, then
+\begin{align*}
+	p(x_1|Y_0) &= \frac{1}{2}\int_{-1+x_1}^{1}\frac{1}{2}\text{d}x_0\\
+	&= \frac{1}{4}(2-x_1).
+\end{align*}
+If $-2 \leq x_1 <0$, then,
+\begin{align*}
+	p(x_1|Y_0) &= \frac{1}{2}\int_{-1}^{1+x_1}\frac{1}{2}\text{d}x_0\\
+	&= \frac{1}{4}(x_1+2).
+\end{align*}
+Therefore,
+\begin{align}\label{eq:q5_1}
+	p(x_1|Y_0) = \begin{cases}
+		\frac{1}{4}(2-x_1),\ \text{ if }0 \leq x_1 \leq 2\\
+		\frac{1}{4}(x_1+2),\ \text{ if }-2 \leq x_1 < 0\\
+		0, \text{ otherwise }.
+	\end{cases}
+\end{align}
+Now,
+\begin{align*}
+	p(x_1|Y_1) &= \frac{p(y_1|x_1)p(x_1|Y_0)}{p(y_1|Y_0)}.
+\end{align*}
+Now,
+\begin{align*}
+	p(y_1|x_1) = p(v_1) = p(y_1-x_1) = \begin{cases}
+		\frac{1}{2},\ \text{ if }-1\leq y_1-x_1\leq 1\\
+		0, \text{ otherwise }.
+	\end{cases}
+\end{align*}
+It is given that $y_1=1$. Therefore,
+\begin{align*}
+	p(y_1|x_1) = \begin{cases}
+		\frac{1}{2},\ \text{ if }0\leq x_1 \leq 2\\
+		0,\ \text{ otherwise }.
+	\end{cases}
+\end{align*}
+Also,
+\begin{align*}
+	p(y_1|Y_0) &= \int_{-\infty}^{\infty}p(y_1|x_1)p(x_1|Y_0)\text{d}x_1\\
+	&= \int_{0}^{2}\frac{1}{2}p(x_1|Y_0)\text{d}x_1\\
+	&= \frac{1}{2}\int_{0}^{2}\frac{1}{4}(2-x_1)\text{d}x_1 \hspace*{1cm}[\text{ from }(\ref{eq:q5_1})]\\
+	&= \frac{1}{8}[4-2] = \frac{1}{4}.
+\end{align*}
+Therefore,
+\begin{align*}
+	p(x_1|Y_1) &= \begin{cases}
+		\frac{\frac{1}{2}\frac{1}{4}(2-x_1)}{\frac{1}{4}} = 1-\frac{x_1}{2},\ \text{ if }0\leq x_1 \leq 2\\
+		0,\ \text{ otherwise }.
+	\end{cases}
+\end{align*}
+%----------------------------------------------------------------------------------------
+%	SOLUTION 5.b
+%----------------------------------------------------------------------------------------
+\subsection*{Problem 5.b}
+In this problem, $Q_k=E[w_kw_k^T] = \frac{1}{3}$ and $R_k = E[v_kv_k^T] = \frac{1}{3}$. Also $F=H=1$.
+\newline
+We can find the Kalman filter estimate of $\hat{x}_1^{+}$ in the following way:
+\begin{align*}
+	\hat{x}_0^{+} &= E[x_0] = 0 \hspace{1cm}[\because x_0 \sim U[-1,1]]\\
+	P_0^{+} &= E[x_0^2] = \frac{1}{3}\\
+	P_1^- &= FP_0^+F^T + Q = \frac{1}{3}+\frac{1}{3} = \frac{2}{3}\\
+	K_1 &= P_1^-H^T(HP_1^-H^T+R)^{-1} = \frac{2}{3}\\
+	\hat{x}_1^- &= F\hat{x}_0^+ = 0\\
+	\hat{x}_1^+ &= \hat{x}_1^-+K_1(y_1-H\hat{x}_1^-) = 0+\frac{2}{3}(1-0) = \frac{2}{3}.
+\end{align*}
+Kalman filter estimate of $\hat{x}^+$ is indicative of MAP estimate of the pdf of $p(x_1|Y_1)$. We can calculate it theoretically and find that it is close enough to the Kalman filter estimate.
+

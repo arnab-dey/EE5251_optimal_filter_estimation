@@ -1,0 +1,84 @@
+%----------------------------------------------------------------------------------------
+%	SOLUTION 2.a
+%----------------------------------------------------------------------------------------
+\subsection*{Problem 2.a}
+It is given that
+\begin{align*}
+	y_k &= \sqrt{x}(1+v_k)\\
+	v_k &\sim \mathcal{N}(0, R).
+\end{align*}
+Therefore,
+\begin{align*}
+	E[v_k] &= 0\\
+	E[v_k^2] &= R\\
+	E[v_k^3] &= 0\\
+	E[v_k^4] &= 3R^2.
+\end{align*}
+If we set $\hat{x}_k = y_k^2$, then the mean of the estimation error:
+\begin{align*}
+	E[x-\hat{x}_k] &= E[x-x(1+v_k)^2]\\
+	&= xE[1-(1+v_k)^2]\\
+	&= xE[1-1-2v_k-v_k^2]\\
+	&= x(-2E[v_k]-E[v_k^2])\\
+	&= -xR.
+\end{align*}
+The variance of the estimation error is:
+\begin{align*}
+	E[(x-\hat{x}_k)(x-\hat{x}_k)^T] &= E[(x-\hat{x}_k)^2]\\
+	&= E[(x-x(1+v_k)^2)^2]\\
+	&= E[x^2(1-(1+v_k)^2)^2]\\
+	&= E[x^2(1-1-2v_k-v_k^2)^2]\\
+	&= E[x^2v_k^2(2+v_k)^2]\\
+	&= E[x^2v_k^2(4+v_k^2+4v_k)]\\
+	&= E[4x^2v_k^2+x^2v_k^4+4x^2v_k^3]\\
+	&= 4x^2R+3x^2R^2.
+\end{align*}
+%----------------------------------------------------------------------------------------
+%	SOLUTION 2.b
+%----------------------------------------------------------------------------------------
+\subsection*{Problem 2.b}
+If we set
+\begin{align*}
+	\hat{x}_k = \frac{1}{k}\sum_{i=1}^{k}y_i^2,
+\end{align*}
+then the mean of estimation error becomes
+\begin{align*}
+	E[x-\hat{x}_k] &= E\left[x-\frac{1}{k}\sum_{i=1}^{k}y_i^2\right]\\
+	&= x-\frac{1}{k}\sum_{i=1}^{k}E[y_i^2]\\
+	&= x-\frac{1}{k}\sum_{i=1}^{k}E[x(1+v_i)^2]\\
+	&= x-\frac{1}{k}\sum_{i=1}^{k}xE[1+2v_i+v_i^2]\\
+	&= x-\frac{1}{k}\sum_{i=1}^{k}x(1+R)\\
+	&= x-x(1+R)\\
+	&= -xR.
+\end{align*}
+To compute the variance of estimation error, we need to find out $E[(x-\hat{x}_k)^2]$. Now,
+\begin{align}\label{eq:q2b_1}
+	E[(x-\hat{x}_k)^2] &= E[x^2+\hat{x}_k^2-2x\hat{x}_k]\nonumber\\
+	&= x^2-2xE[\hat{x}_k]+E[\hat{x}_k^2]\nonumber\\
+	&= x^2-2x(x(1+R))+E[\hat{x}_k^2]\nonumber\\
+	&= x^2-2x^2(1+R)+E[\hat{x}_k^2]
+\end{align}
+Now,
+\begin{align*}
+	E[\hat{x}_k^2] &= E\left[ \left( \frac{1}{k}\sum_{i=1}^{k}y_i^2 \right)^2\right]\\
+	&= E\left[\left(\frac{1}{k}\sum_{i=1}^{k}x(1+v_i)^2\right)^2\right]\\
+	&= E\left[\frac{x^2}{k^2}\left(\sum_{i=1}^{k}(1+v_i)^2\right)^2\right]\\
+	&= E\left[\frac{x^2}{k^2}\left(\sum_{i=1}^{k}(1+v_i)^4+2\sum_{i=1}^{k}\sum_{j=i,j\neq i}^{k}(1+v_i)^2(1+v_j)^2\right)\right]\\
+	&= \frac{x^2}{k^2}\sum_{i=1}^{k}E\left[(1+v_i)^4\right]+\frac{2x^2}{k^2}\sum_{i=1}^{k}\sum_{j=i,j\neq i}^{k}E\left[(1+v_i)^2(1+v_j)^2\right]\\
+	&= \frac{x^2}{k^2}\sum_{i=1}^{k}E\left[1+4v_i+6v_i^2+4v_i^3+v_i^4\right]\\
+	&+\frac{2x^2}{k^2}\sum_{i=1}^{k}\sum_{j=i,j\neq i}^{k}E\left[1+2v_j+2v_i+4v_iv_j+2v_iv_j^2+2v_i^2v_j+v_i^2+v_j^2+v_i^2v_j^2\right]\\
+	&= \frac{x^2}{k^2}\sum_{i=1}^{k}(1+6R+3R^2)+\frac{2x^2}{k^2}\sum_{i=1}^{k}\sum_{j=i,j\neq i}^{k}(1+R+R+R^2)\\
+	&= \frac{x^2}{k^2}k(1+6R+3R^2)+\frac{2x^2}{k^2}\sum_{i=1}^{k}\sum_{j=i,j\neq i}^{k}(1+2R+R^2)\\
+	&= \frac{x^2}{k^2}\left(k+6kR+3kR^2+2 {k \choose 2} (1+2R+R^2)\right)\\
+	&= \frac{x^2}{k^2}\left(k+6kR+3kR^2 + k(k-1)(1+2R+R^2)\right)
+\end{align*}
+Therefore, from~(\ref{eq:q2b_1}),
+\begin{align*}
+	E[(x-\hat{x}_k)^2] = x^2-2x^2(1+R) + \frac{x^2}{k^2}\left(k+6kR+3kR^2 + k(k-1)(1+2R+R^2)\right).
+\end{align*}
+To prove that we get the same value as derived in part (a), put $k=1$ above. Then, we get, $E[(x-\hat{x}_k)^2] = x^2-2x^2(1+R)+x^2(1+6R+3R^2)=-2x^2R+6x^2R+3x^2R^2=4x^2R+3x^2R^2$.
+Also,
+\begin{align*}
+	\lim_{k \to \infty}E[(x-\hat{x}_k)^2] &= x^2-2x^2(1+R)+x^2(1+2R+R^2)\\
+	&= x^2R^2.
+\end{align*}

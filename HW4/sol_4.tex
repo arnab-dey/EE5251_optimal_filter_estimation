@@ -1,0 +1,51 @@
+%----------------------------------------------------------------------------------------
+%	SOLUTION 4.a
+%----------------------------------------------------------------------------------------
+\subsection*{Problem 4.a}
+Maximum likelihood estimate of $x$ is given by $\text{argmax}_x pdf(x)$. The pdf of $x$ is given by
+\begin{align*}
+	pdf(x) = \begin{cases}
+		1-\frac{x}{2},\ \text{ if }x \in [0,2]\\
+		0,\ \text{ otherwise }.
+	\end{cases}
+\end{align*}
+We can see that $pdf(x)$ takes the maximum value when $x=0$. Therefore, the MLE of $x$ is, $\hat{x}_{MLE} = 0$.
+%----------------------------------------------------------------------------------------
+%	SOLUTION 4.b
+%----------------------------------------------------------------------------------------
+\subsection*{Problem 4.b}
+The min-max estimate is given by $\text{argmin}_{\hat{x}}(\max|x-\hat{x}|))$. Therefore, as pdf is $0$ if $x \notin [0,2]$, the min-max estimate of $x$ is given by $\frac{1}{2}(0+2) = 1$.
+%----------------------------------------------------------------------------------------
+%	SOLUTION 4.c
+%----------------------------------------------------------------------------------------
+\subsection*{Problem 4.c}
+\begin{align*}
+	E[(x-\hat{x})^2] &= \int_{-\infty}^{\infty} (x-\hat{x})^2p(x)\text{d}x\\
+	&= \int_{-\infty}^{\infty}x^2p(x)\text{d}x-2\hat{x}\int_{-\infty}^{\infty}xp(x)\text{d}x+\hat{x}^2\int_{-\infty}^{\infty}p(x)\text{d}x\\
+	&= \int_{-\infty}^{\infty}x^2p(x)\text{d}x-2\hat{x}\int_{-\infty}^{\infty}xp(x)\text{d}x+\hat{x}^2
+\end{align*}
+Now, suppose $\hat{x}_{min}$ minimizes the above function. Then,
+\begin{align*}
+	&\frac{\partial E[(x-\hat{x})^2]}{\partial \hat{x}} = 0\\
+	\implies & \int_{-\infty}^{\infty}xp(x)\text{d}x = \hat{x}_{min}\\
+	\implies & \hat{x}_{min} = E[x].
+\end{align*}
+Now,
+\begin{align*}
+	E[x] &= \int_{-\infty}^{\infty} xp(x)\text{d}x\\
+	&= \int_{0}^{2}(1-\frac{x}{2})\text{d}x\\
+	&= \left[x-\frac{x^2}{4}\right]_0^2\\
+	&= 1.
+\end{align*}
+Therefore, $\hat{x}_{min} = 1.$
+%----------------------------------------------------------------------------------------
+%	SOLUTION 4.d
+%----------------------------------------------------------------------------------------
+\subsection*{Problem 4.d}
+\begin{align*}
+E[x] &= \int_{-\infty}^{\infty} xp(x)\text{d}x\\
+	&= \int_{0}^{2}(1-\frac{x}{2})\text{d}x\\
+	&= \left[x-\frac{x^2}{4}\right]_0^2\\
+	&= 1.
+\end{align*}
+Therefore, $\hat{x} = 1.$
